@@ -1,0 +1,29 @@
+version: '3'
+services:
+  mon_container:
+    image: ubuntu
+    command: 
+      - /bin/bash
+      - -c
+      - |
+        echo "Hello, World!"
+        echo "This is a Docker container running Ubuntu."
+        # Ajoutez vos commandes supplémentaires ici
+        tail -f /dev/null
+        # Mise à jour du système
+        sudo apt update
+        # Installation des dépendances
+        sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+        # Ajout de la clé GPG officielle de Docker
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+        # Ajout du repository Docker
+        echo  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        # Mise à jour du système après l'ajout du repository
+        sudo apt update -y
+        # Installation de Docker Engine
+        sudo apt install -y docker-ce docker-ce-cli containerd.io
+        # Vérification de l'instl'installationl'installationallation
+        sudo docker run hello-world
+        docker pull ubuntu:latest
+        ls
+        docker run -it ubuntu
